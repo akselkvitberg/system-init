@@ -1,46 +1,80 @@
 [user]
-    name = Aaron Powell
-    email = me@aaron-powell.com
+	name = Aksel Kvitberg
+	email = aksel.kvitberg@outlook.com
+
 
 [alias]
-    gl = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-    unstage = reset HEAD $1
-    serve = !git daemon --reuseaddr --base-path=. --export-all --verbose --enable=receive-pack ./.git
-    sl = "!f() { x=${1--10}; git log --pretty=format:'%C(yellow)%h %Creset%s%C(bold blue) [%cn]'  $x; }; f"
-    ss = status -s
-    f = "!git ls-files | grep -i"
-    gra = "\"!f() { A=$(pwd) && TOPLEVEL=$(git rev-parse --show-toplevel) && cd $TOPLEVEL && git grep --full-name -In $1 | xargs -I{} echo $TOPLEVEL/{} && cd $A; }; f\""
-    rmb = "!f() { git branch --merged | grep -v "main" | while read i; do git branch -d $i; done; }; f"
-    co = checkout
-    cb = checkout -b
-    wip = !git add -u && git commit -m "WIP"
-    amend = commit -a --amend
-    wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+	# Utility
+	branch-name = "!git rev-parse --abbrev-ref HEAD"
+	nano = "!bash -c 'nano $2'"
+	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
+
+	# View history
+	tree = log --graph --oneline --decorate --all
+	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	lg = !"git lg1"
+	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+	ll = log --pretty=format:"%C(yellow)%h\\ \\-\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat --date=relative
+
+	# Something broke the build. Wat?
+	wat = log --graph --decorate --oneline -15
+
+	# What have I been working on
+	me = log --pretty=format:'%C(yellow)%h  %Cred%ad  %Creset%s' --author="aksel.kvitberg@outlook.com" --all
+
+	# Which commits are on the specified branch, but not on current branch
+	diff-from = "!git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative $(git branch-name).."
+	# Which commits are on current branch, but not on specified branch
+	diff-to = "!git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative $1..$(git branch-name)"
+
+	# Diff aliases
+	wdiff = diff --word-diff
+	cdiff = diff --cached
+	wcdiff = diff --word-diff --cached
+
+	# Commit management
+	unstage = reset HEAD --
+	patch = add --patch
+	amend = commit --amend
+	reword = commit --amend
+	# Rebases current branch on upstream branch, to view and edit commits to be pushed
+	# WARNING! Does not preserve merges
+	review = !git rebase -i $(git merge-base --fork-point @{u})
+
+	# Wipes all changes, tracked or not, and returns to a clean working state
+	wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+
+	# Branch management
+	publish = "!git push -u origin $(git branch-name)"
+	delete-upstream = push origin --delete
+	delete-branch = branch -d
+
+	# Ignore files from git by assuming unchanging
+	assume = update-index --assume-unchanged
+	unassume = update-index --no-assume-unchanged
+	assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+	unassumeall = "!git assumed | xargs git update-index --no-assume-unchanged"
+	assumeall = "!git st -s | awk {'print $2'} | xargs git assume"
+
+	test = !"echo hello world"
+
+[includeIf "gitdir:C:/Sources/"]
+	path = C:/Sources/.gitconfig
 
 [core]
-    askpass = /usr/libexec/git-core/git-gui--askpass
-
-[push]
-    default = simple
-
-[credential]
-    helper = manager
-# Uncomment for WSL
-    # helper = /mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe
-
-[code]
-    editor = code-insiders --wait
-
-[merge]
-    tool = vscode
-
-[mergetool "vscode"]
-    cmd = code-insiders --wait $MERGED
-
-[diff]
-    tool = vscode
-
-[difftool "vscode"]
-    cmd = code-insiders --wait --diff $LOCAL $REMOTE
-[init]
-	defaultBranch = main
+	editor = nano
+[help]
+	autocorrect = 20
+[difftool "sourcetree"]
+	cmd = '' \"$LOCAL\" \"$REMOTE\"
+[mergetool "sourcetree"]
+	cmd = "'' "
+	trustExitCode = true
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[gpg]
+	program = C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe
