@@ -99,6 +99,7 @@ $repoBaseUrl = 'https://raw.githubusercontent.com/akselkvitberg/system-init/main
 Invoke-WebRequest -Uri "$repoBaseUrl/common/.gitconfig" -OutFile (Join-Path $env:USERPROFILE '.gitconfig')
 Invoke-WebRequest -Uri "$repoBaseUrl/windows/Microsoft.PowerShell_profile.ps1" -OutFile $PROFILE
 Invoke-WebRequest -Uri "$repoBaseUrl/windows/Microsoft.PowerShell_profile.ps1" -OutFile $PROFILE.Replace("WindowsPowerShell", "PowerShell")
+Invoke-WebRequest -Uri "$repoBaseUrl/windows/poshTheme.json" -OutFile (Split-Path $PROFILE.Replace("WindowsPowerShell", "PowerShell")) + "poshTheme.json"
 Invoke-WebRequest -Uri "$repoBaseUrl/windows/profiles.json" -OutFile "$env:LocalAppData\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 
 Write-Host Installing dotnet global tools
