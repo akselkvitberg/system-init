@@ -2,7 +2,7 @@ Write-Host Installing winget packages
 
 $packages = @(
     # SDKs
-    'Microsoft.DotNet.SDK.6',
+    'Microsoft.DotNet.SDK.7',
     'Python.Python.3',
 
     # Dev Tools
@@ -38,6 +38,9 @@ $packages = @(
     # Chat
     'Microsoft.Teams',
     'Telegram.TelegramDesktop',
+    'Discord.Discord',
+    'OpenWhisperSystems.Signal',
+    'SlackTechnologies.Slack'
 
     # Misc
     'Microsoft.Powershell.Preview',
@@ -48,7 +51,7 @@ $packages = @(
     '7zip.7zip',
     'Spotify.Spotify',
     'QL-Win.QuickLook'
-    'Logitech.Options',
+    'Logitech.OptionsPlus'
     'Nvidia.GeForceExperience'
 )
 
@@ -117,6 +120,7 @@ wsl --install
 wsl --exec "curl $repoBaseUrl/linux/setup.sh | bash"
 
 Write-Host Installing VS Code extensions
+code --install-extension adpyke.codesnap
 code --install-extension esbenp.prettier-vscode
 code --install-extension dbaeumer.vscode-eslint
 code --install-extension bradlc.vscode-tailwindcss
@@ -129,6 +133,7 @@ code --install-extension EditorConfig.EditorConfig
 code --install-extension formulahendry.auto-close-tag
 code --install-extension formulahendry.auto-rename-tag
 code --install-extension humao.rest-client
+code --install-extension Ionide.Ionide-fsharp
 code --install-extension ms-azuretools.vscode-azurefunctions
 code --install-extension ms-azuretools.vscode-azureresourcegroups
 code --install-extension ms-azuretools.vscode-docker
@@ -144,6 +149,7 @@ code --install-extension ms-vscode.azure-account
 code --install-extension ms-vscode.hexeditor
 code --install-extension ms-vscode.powershell
 code --install-extension ms-vsliveshare.vsliveshare
+code --install-extension mvllow.rose-pine
 code --install-extension pflannery.vscode-versionlens
 code --install-extension PKief.material-icon-theme
 code --install-extension rangav.vscode-thunder-client
