@@ -31,7 +31,7 @@ $packages = @(
     'JetBrains.Toolbox',
     
     # Database
-    'Microsoft.SQLServer.2019.Developer',
+    #'Microsoft.SQLServer.2019.Developer',
     'Microsoft.AzureDataStudio',
     'Microsoft.SQLServerManagementStudio',
 
@@ -72,7 +72,7 @@ function Install-PowerShellModule {
 
     if (!(Get-Command -Name $ModuleName -ErrorAction SilentlyContinue)) {
         Write-Host "Installing $ModuleName"
-        Install-Module -Name $ModuleName -Scope CurrentUser
+        Install-Module -Name $ModuleName -Scope CurrentUser -Force
         Import-Module $ModuleName
 
         Invoke-Command -ScriptBlock $PostInstall
@@ -90,10 +90,10 @@ Install-PowerShellModule 'Go'
 Install-PowerShellModule 'ImportExcel'
 Install-PowerShellModule 'PSReadLine'
 Install-PowerShellModule 'Terminal-Icons'
-Install-PowerShellModule 'nvm' {
-    Install-NodeVersion latest
-    Set-NodeVersion -Persist User latest
-}
+#Install-PowerShellModule 'nvm' {
+#    Install-NodeVersion latest
+#    Set-NodeVersion -Persist User latest
+#}
 
 Write-Host Setting up dotfiles
 
