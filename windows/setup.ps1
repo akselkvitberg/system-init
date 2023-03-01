@@ -55,7 +55,10 @@ $packages = @(
     'Nvidia.GeForceExperience'
 )
 
-$packages | ForEach-Object { winget install --id $_ }
+$packages | ForEach-Object { 
+    Write-Host "winget install --id $_"
+    winget install --id $_ 
+}
 
 Write-Host Installing PowerShell Modules
 
