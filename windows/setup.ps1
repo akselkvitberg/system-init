@@ -89,7 +89,7 @@ Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
 
 Install-PowerShellModule 'Posh-Git'
 Install-PowerShellModule 'PSProfiler'
-Install-PowerShellModule 'Go'
+#Install-PowerShellModule 'Go'
 Install-PowerShellModule 'ImportExcel'
 Install-PowerShellModule 'PSReadLine'
 Install-PowerShellModule 'Terminal-Icons'
