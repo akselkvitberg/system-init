@@ -120,7 +120,7 @@ dotnet tool install -g microsoft.dotnet-httprepl
 Write-Host Installing additional software
 
 wsl --install
-wsl --exec "curl $repoBaseUrl/linux/setup.sh | bash"
+#wsl --exec "curl $repoBaseUrl/linux/setup.sh | bash"
 
 Write-Host Installing VS Code extensions
 code --install-extension adpyke.codesnap
