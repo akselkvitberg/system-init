@@ -47,11 +47,11 @@ $packages = @(
     'Microsoft.PowerToys',
     'Microsoft.OneDrive',
     'NickeManarin.ScreenToGif',
-    'Microsoft.Office',
+    #'Microsoft.Office',
     '7zip.7zip',
-    'Spotify.Spotify',
+    #'Spotify.Spotify',
     'QL-Win.QuickLook'
-    'Logitech.OptionsPlus'
+    #'Logitech.OptionsPlus'
     'Nvidia.GeForceExperience'
 )
 
@@ -109,12 +109,12 @@ Invoke-WebRequest -Uri "$repoBaseUrl/windows/poshTheme.json" -OutFile (Split-Pat
 Invoke-WebRequest -Uri "$repoBaseUrl/windows/profiles.json" -OutFile "$env:LocalAppData\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 
 Write-Host Installing dotnet global tools
-dotnet install tool -g dotnet-ef
-dotnet install tool -g dotnet-suggest
-dotnet install tool -g dotnet-serve
-dotnet install tool -g dotnet-project-licenses
-dotnet install tool -g dotnet-outdated-tool
-dotnet install tool -g microsoft.dotnet-httprepl
+dotnet tool install -g dotnet-ef
+dotnet tool install -g dotnet-suggest
+dotnet tool install -g dotnet-serve
+dotnet tool install -g dotnet-project-licenses
+dotnet tool install -g dotnet-outdated-tool
+dotnet tool install -g microsoft.dotnet-httprepl
 
 
 Write-Host Installing additional software
